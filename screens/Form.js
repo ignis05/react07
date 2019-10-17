@@ -5,7 +5,7 @@ import Button from '../components/Button'
 const styles = StyleSheet.create({
 	wrapper: { flex: 1 },
 	header: { flex: 1, backgroundColor: 'lime', alignItems: 'center', justifyContent: 'center' },
-	headerText: { fontSize: 48, color: 'white' },
+	headerText: { fontSize: 48, color: 'white', textAlign: 'center' },
 	form: { flex: 1, padding: 10 },
 	label: { fontSize: 24 },
 	input: { color: 'lime', borderBottomColor: '#cccccc', borderBottomWidth: 1, fontSize: 24, marginBottom: 20 },
@@ -30,8 +30,6 @@ class Form extends Component {
 	}
 
 	async submitHandler() {
-		console.log('form:')
-		console.log(this.state.username, this.state.password)
 		if (!this.state.username && !this.state.password) {
 			window.alert('Please fill all inputs')
 			return
@@ -39,24 +37,29 @@ class Form extends Component {
 
 		let data = { username: this.state.username, password: this.state.password }
 
-		const response = await fetch('192.168.1.12:3000', {
+		var response = await fetch('http://192.168.1.3:3000/register', {
 			method: 'POST',
 			headers: {
+				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(data),
 		})
-		console.log('res:')
+			.then(res => res.json())
+			.catch(error => window.alert(error))
+
 		console.log(response)
 	}
 
+	focusNext() {}
+
 	render() {
 		return (
-			<View style={styles.wrapper}>
+			<KeyboardAvoidingView behavior="padding" style={styles.wrapper}>
 				<View style={styles.header}>
 					<Text style={styles.headerText}>Register Node App</Text>
 				</View>
-				<KeyboardAvoidingView style={styles.form}>
+				<View style={styles.form}>
 					<Text style={styles.label}>username</Text>
 					<TextInput
 						keyboardAppearance="dark"
@@ -66,9 +69,15 @@ class Form extends Component {
 						placeholder="username"
 						onChangeText={username => this.setState({ username })}
 						value={this.state.username}
+						returnKeyType="next"
+						onSubmitEditing={() => this.passwordInput.focus()}
+						blurOnSubmit={false}
 					/>
 					<Text style={styles.label}>password</Text>
 					<TextInput
+						ref={input => {
+							this.passwordInput = input
+						}}
 						keyboardAppearance="dark"
 						autoCapitalize="none"
 						autoCorrect={false}
@@ -76,12 +85,14 @@ class Form extends Component {
 						placeholder="password"
 						onChangeText={password => this.setState({ password })}
 						value={this.state.password}
+						returnKeyType="send"
+						onSubmitEditing={this.submitHandler}
 					/>
 					<View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center' }}>
 						<Button onTouch={this.submitHandler}>Register</Button>
 					</View>
-				</KeyboardAvoidingView>
-			</View>
+				</View>
+			</KeyboardAvoidingView>
 		)
 	}
 }
