@@ -37,7 +37,7 @@ class Form extends Component {
 
 		let data = { username: this.state.username, password: this.state.password }
 
-		var response = await fetch('http://192.168.1.3:3000/register', {
+		var response = await fetch('http://ignis-react07.ct8.pl/register', {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',
@@ -49,6 +49,11 @@ class Form extends Component {
 			.catch(error => window.alert(error))
 
 		console.log(response)
+		if (response.msg == 'ok') {
+			this.props.navigation.navigate('list')
+		} else {
+			window.alert(response.msg)
+		}
 	}
 
 	focusNext() {}

@@ -1,20 +1,36 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import React, { Component } from 'react'
+import { View, Text } from 'react-native'
 
 class UserList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
+	constructor(props) {
+		super(props)
+		this.state = { users: [] }
+	}
 
-  render() {
-    return (
-      <View>
-        <Text> UserList </Text>
-      </View>
-    );
-  }
+	async componentDidMount() {
+		var response = await fetch('http://ignis-react07.ct8.pl/get', {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+		})
+			.then(res => res.json())
+			.catch(error => window.alert(error))
+
+		console.log(response)
+		if (response.msg == 'ok') {
+			this.setState({ users: response.users })
+		}
+	}
+
+	render() {
+		return (
+			<View>
+				<Text>{JSON.stringify(this.state.users)}</Text>
+			</View>
+		)
+	}
 }
 
-export default UserList;
+export default UserList
