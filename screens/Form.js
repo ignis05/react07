@@ -29,12 +29,25 @@ class Form extends Component {
 		this.submitHandler = this.submitHandler.bind(this)
 	}
 
-	submitHandler() {
+	async submitHandler() {
+		console.log('form:')
 		console.log(this.state.username, this.state.password)
 		if (!this.state.username && !this.state.password) {
 			window.alert('Please fill all inputs')
 			return
 		}
+
+		let data = { username: this.state.username, password: this.state.password }
+
+		const response = await fetch('192.168.1.12:3000', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		})
+		console.log('res:')
+		console.log(response)
 	}
 
 	render() {
