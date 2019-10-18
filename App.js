@@ -3,8 +3,8 @@ import Form from './screens/Form'
 import UserList from './screens/UserList'
 
 const Root = createStackNavigator({
-	form: { screen: Form },
 	list: { screen: UserList },
+	form: { screen: Form },
 })
 
 const App = createAppContainer(Root)

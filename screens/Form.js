@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput } from 'react-native'
 import Button from '../components/Button'
+import ServerData from '../helpers/ServerData'
 
 const styles = StyleSheet.create({
 	wrapper: { flex: 1 },
@@ -14,13 +15,6 @@ const styles = StyleSheet.create({
 class Form extends Component {
 	static navigationOptions = {
 		header: null,
-		/* title: 'any title',
-		headerStyle: {
-			backgroundColor: '#ff0000',
-		},
-		headerTitleStyle: {
-			color: '#ffffff',
-		}, */
 	}
 
 	constructor(props) {
@@ -37,7 +31,7 @@ class Form extends Component {
 
 		let data = { username: this.state.username, password: this.state.password }
 
-		var response = await fetch('http://ignis-react07.ct8.pl/register', {
+		var response = await fetch(`${ServerData}/register`, {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',
