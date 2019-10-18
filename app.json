@@ -2,7 +2,7 @@
   "expo": {
     "name": "Register Form",
     "slug": "react07",
-    "privacy": "public",
+    "privacy": "unlisted",
     "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
@@ -12,6 +12,9 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
+    "android": {
+      "package": "com.zsl.mikolajczyk"
+    },
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
