@@ -25,6 +25,7 @@ class UserList extends Component {
 		super(props)
 		this.state = { users: [] }
 		this.deleteItem = this.deleteItem.bind(this)
+		this.changeView = this.changeView.bind(this)
 	}
 
 	async componentDidMount() {
@@ -38,7 +39,6 @@ class UserList extends Component {
 			.then(res => res.json())
 			.catch(error => window.alert(error))
 
-		console.log(response)
 		if (response.msg == 'ok') {
 			this.setState({ users: response.users })
 		}
@@ -58,12 +58,16 @@ class UserList extends Component {
 			.then(res => res.json())
 			.catch(error => window.alert(error))
 
-		console.log(response)
 		if (response.msg == 'ok') {
 			this.setState({ users: response.users })
 		} else {
 			window.alert(response.msg)
 		}
+	}
+
+	changeView(data) {
+		console.log(data)
+		this.props.navigation.navigate('edit', data)
 	}
 
 	render() {
@@ -77,7 +81,7 @@ class UserList extends Component {
 						style={styles.list}
 						data={this.state.users}
 						keyExtractor={item => item.username}
-						renderItem={({ item }) => <UserListElement callback={this.deleteItem} username={item.username} />}
+						renderItem={({ item }) => <UserListElement callback={this.deleteItem} username={item.username} password={item.password} changeView={this.changeView} />}
 					/>
 				) : (
 					<Text>Loading data</Text>

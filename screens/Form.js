@@ -42,7 +42,6 @@ class Form extends Component {
 			.then(res => res.json())
 			.catch(error => window.alert(error))
 
-		console.log(response)
 		if (response.msg == 'ok') {
 			this.props.navigation.navigate('list')
 		} else {

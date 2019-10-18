@@ -19,10 +19,15 @@ class UserListElement extends Component {
 		this.state = {}
 
 		this.deleteUser = this.deleteUser.bind(this)
+		this.changeView = this.changeView.bind(this)
 	}
 
 	deleteUser() {
 		this.props.callback(this.props.username)
+	}
+
+	changeView() {
+		this.props.changeView({ username: this.props.username, password: this.props.password })
 	}
 
 	render() {
@@ -35,7 +40,7 @@ class UserListElement extends Component {
 					</View>
 				</View>
 				<View style={[styles.container, styles.buttonContainer]}>
-					<Button>Edit</Button>
+					<Button onTouch={this.changeView}>Edit</Button>
 					<Button username={this.props.username} onTouch={this.deleteUser}>
 						Delete
 					</Button>
