@@ -5,11 +5,11 @@ import ServerData from '../helpers/ServerData'
 
 const styles = StyleSheet.create({
 	wrapper: { flex: 1 },
-	header: { flex: 1, backgroundColor: 'lime', alignItems: 'center', justifyContent: 'center' },
+	header: { flex: 1, backgroundColor: 'red', alignItems: 'center', justifyContent: 'center' },
 	headerText: { fontSize: 48, color: 'white', textAlign: 'center' },
 	form: { flex: 1, padding: 10 },
 	label: { fontSize: 24 },
-	input: { color: 'lime', borderBottomColor: '#cccccc', borderBottomWidth: 1, fontSize: 24, marginBottom: 20 },
+	input: { color: 'red', borderBottomColor: '#cccccc', borderBottomWidth: 1, fontSize: 24, marginBottom: 20 },
 })
 
 class Form extends Component {

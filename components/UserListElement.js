@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
-import img from '../assets/images/robot-dev.png'
+import img from '../assets/images/user.png'
 import Button from './Button'
 
 const styles = StyleSheet.create({
-	wrapper: { width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+	wrapper: { width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
 	container: { flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' },
 	dataContainer: { width: '55%', justifyContent: 'flex-start', paddingLeft: 20, paddingRight: 5 },
 	buttonContainer: { width: '40%', height: '100%' },
 	img: { width: 40, height: 40, marginRight: 10 },
 	textWrapper: { flex: 1 },
-	text: {},
+	text: { fontSize: 18 },
 })
 
 class UserListElement extends Component {

@@ -23,25 +23,33 @@ class UserList extends Component {
 
 	constructor(props) {
 		super(props)
-		this.state = { users: [] }
+		this.state = { users: [], refreshing: false }
 		this.deleteItem = this.deleteItem.bind(this)
 		this.changeView = this.changeView.bind(this)
+		this.refresh = this.refresh.bind(this)
+	}
+
+	async refresh() {
+		this.setState({ refreshing: true }, async () => {
+			var response = await fetch(`${ServerData}/get`, {
+				method: 'POST',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+			})
+				.then(res => res.json())
+				.catch(error => window.alert(error))
+
+			if (response.msg == 'ok') {
+				this.setState({ users: response.users })
+			}
+			this.setState({ refreshing: false })
+		})
 	}
 
 	async componentDidMount() {
-		var response = await fetch(`${ServerData}/get`, {
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-		})
-			.then(res => res.json())
-			.catch(error => window.alert(error))
-
-		if (response.msg == 'ok') {
-			this.setState({ users: response.users })
-		}
+		this.refresh()
 	}
 
 	async deleteItem(username) {
@@ -74,14 +82,17 @@ class UserList extends Component {
 		return (
 			<View style={styles.wrapper}>
 				<Button onTouch={() => this.props.navigation.navigate('form')} style={styles.returnButton}>
-					Back to login page
+					BACK TO LOGIN PAGE
 				</Button>
 				{this.state.users.length > 0 ? (
 					<FlatList
+						soc
 						style={styles.list}
 						data={this.state.users}
 						keyExtractor={item => item.username}
 						renderItem={({ item }) => <UserListElement callback={this.deleteItem} username={item.username} password={item.password} changeView={this.changeView} />}
+						onRefresh={this.refresh}
+						refreshing={this.state.refreshing}
 					/>
 				) : (
 					<Text>Loading data</Text>
