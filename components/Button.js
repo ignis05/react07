@@ -3,6 +3,12 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 
 class Button extends Component {
+	static propTypes = {
+		onTouch: PropTypes.func,
+		children: PropTypes.string.isRequired,
+		stylle: PropTypes.object,
+	}
+
 	constructor(props) {
 		super(props)
 
@@ -21,11 +27,6 @@ class Button extends Component {
 			</TouchableOpacity>
 		)
 	}
-}
-
-Button.propTypes = {
-	onTouch: PropTypes.func,
-	children: PropTypes.string.isRequired,
 }
 
 export default Button

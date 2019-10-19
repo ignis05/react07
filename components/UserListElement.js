@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
 import img from '../assets/images/user.png'
 import Button from './Button'
+import PropTypes from 'prop-types'
 
 const styles = StyleSheet.create({
 	wrapper: { width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
@@ -14,6 +15,13 @@ const styles = StyleSheet.create({
 })
 
 class UserListElement extends Component {
+	static propTypes = {
+		username: PropTypes.string.isRequired,
+		password: PropTypes.string,
+		deleteUser: PropTypes.func.isRequired,
+		changeView: PropTypes.func.isRequired,
+	}
+
 	constructor(props) {
 		super(props)
 		this.state = {}
@@ -23,7 +31,7 @@ class UserListElement extends Component {
 	}
 
 	deleteUser() {
-		this.props.callback(this.props.username)
+		this.props.deleteUser(this.props.username)
 	}
 
 	changeView() {

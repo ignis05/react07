@@ -24,7 +24,7 @@ class UserList extends Component {
 	constructor(props) {
 		super(props)
 		this.state = { users: [], refreshing: false }
-		this.deleteItem = this.deleteItem.bind(this)
+		this.deleteUser = this.deleteUser.bind(this)
 		this.changeView = this.changeView.bind(this)
 		this.refresh = this.refresh.bind(this)
 	}
@@ -52,7 +52,7 @@ class UserList extends Component {
 		this.refresh()
 	}
 
-	async deleteItem(username) {
+	async deleteUser(username) {
 		console.log(username)
 
 		var response = await fetch(`${ServerData}/delete`, {
@@ -90,7 +90,7 @@ class UserList extends Component {
 						style={styles.list}
 						data={this.state.users}
 						keyExtractor={item => item.username}
-						renderItem={({ item }) => <UserListElement callback={this.deleteItem} username={item.username} password={item.password} changeView={this.changeView} />}
+						renderItem={({ item }) => <UserListElement username={item.username} password={item.password} changeView={this.changeView} deleteUser={this.deleteUser} />}
 						onRefresh={this.refresh}
 						refreshing={this.state.refreshing}
 					/>
