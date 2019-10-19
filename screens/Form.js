@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput } from 'react-native'
+import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, Alert } from 'react-native'
 import Button from '../components/Button'
 import ServerData from '../helpers/ServerData'
 
@@ -25,7 +25,7 @@ class Form extends Component {
 
 	async submitHandler() {
 		if (!this.state.username && !this.state.password) {
-			window.alert('Please fill all inputs')
+			Alert.alert('Empty field', 'Please fill all inputs')
 			return
 		}
 
@@ -40,12 +40,20 @@ class Form extends Component {
 			body: JSON.stringify(data),
 		})
 			.then(res => res.json())
-			.catch(error => window.alert(error))
+			.catch(error => Alert.alert('Error', error))
 
-		if (response.msg == 'ok') {
-			this.props.navigation.navigate('list')
-		} else {
-			window.alert(response.msg)
+		switch (response.msg) {
+			case 'ok':
+				this.props.navigation.navigate('list')
+				break
+			case 'user_exists':
+				Alert.alert('Username taken', `Username "${data.username}" is already taken.\n Please select different username.`)
+				break
+			case 'empty_data':
+				Alert.alert('Empty field', 'Please fill all inputs')
+				break
+			default:
+				Alert.alert('Error', response.msg)
 		}
 	}
 

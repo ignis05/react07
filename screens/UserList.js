@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, FlatList, Text, StyleSheet } from 'react-native'
+import { View, FlatList, Text, StyleSheet, Alert } from 'react-native'
 import UserListElement from '../components/UserListElement'
 import Button from '../components/Button'
 import ServerData from '../helpers/ServerData'
@@ -39,7 +39,7 @@ class UserList extends Component {
 				},
 			})
 				.then(res => res.json())
-				.catch(error => window.alert(error))
+				.catch(error => Alert.alert('Error', error))
 
 			if (response.msg == 'ok') {
 				this.setState({ users: response.users })
@@ -64,12 +64,17 @@ class UserList extends Component {
 			body: JSON.stringify({ username: username }),
 		})
 			.then(res => res.json())
-			.catch(error => window.alert(error))
+			.catch(error => Alert.alert('Error', error))
 
-		if (response.msg == 'ok') {
-			this.setState({ users: response.users })
-		} else {
-			window.alert(response.msg)
+		switch (response.msg) {
+			case 'ok':
+				this.setState({ users: response.users })
+				break
+			case 'user does not exist':
+				Alert.alert(`Error - user doesn't exist`, 'Please refresh user list')
+				break
+			default:
+				Alert.alert('Error', response.msg)
 		}
 	}
 
