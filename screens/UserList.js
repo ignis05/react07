@@ -91,11 +91,12 @@ class UserList extends Component {
 				</Button>
 				{this.state.users.length > 0 ? (
 					<FlatList
-						soc
 						style={styles.list}
 						data={this.state.users}
 						keyExtractor={item => item.username}
-						renderItem={({ item }) => <UserListElement username={item.username} password={item.password} changeView={this.changeView} deleteUser={this.deleteUser} />}
+						renderItem={({ item, index }) => (
+							<UserListElement username={item.username} password={item.password} changeView={this.changeView} deleteUser={this.deleteUser} highlighted={index % 2 == 0 ? true : false} />
+						)}
 						onRefresh={this.refresh}
 						refreshing={this.state.refreshing}
 					/>

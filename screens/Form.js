@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, Alert } from 'react-native'
+import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, Alert, ActivityIndicator } from 'react-native'
 import Button from '../components/Button'
 import ServerData from '../helpers/ServerData'
 
@@ -19,11 +19,11 @@ class Form extends Component {
 
 	constructor(props) {
 		super(props)
-		this.state = { username: '', password: '' }
+		this.state = { username: '', password: '', loading: false }
 		this.submitHandler = this.submitHandler.bind(this)
 	}
 
-	async submitHandler() {
+	submitHandler() {
 		if (!this.state.username && !this.state.password) {
 			Alert.alert('Empty field', 'Please fill all inputs')
 			return
@@ -31,30 +31,33 @@ class Form extends Component {
 
 		let data = { username: this.state.username, password: this.state.password }
 
-		var response = await fetch(`${ServerData}/register`, {
-			method: 'POST',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(data),
-		})
-			.then(res => res.json())
-			.catch(error => Alert.alert('Error', error))
+		this.setState({ loading: true }, async () => {
+			var response = await fetch(`${ServerData}/register`, {
+				method: 'POST',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			})
+				.then(res => res.json())
+				.catch(error => Alert.alert('Error', error))
 
-		switch (response.msg) {
-			case 'ok':
-				this.props.navigation.navigate('list')
-				break
-			case 'user_exists':
-				Alert.alert('Username taken', `Username "${data.username}" is already taken.\n Please select different username.`)
-				break
-			case 'empty_data':
-				Alert.alert('Empty field', 'Please fill all inputs')
-				break
-			default:
-				Alert.alert('Error', response.msg)
-		}
+			this.setState({ loading: false })
+			switch (response.msg) {
+				case 'ok':
+					this.props.navigation.navigate('list')
+					break
+				case 'user_exists':
+					Alert.alert('Username taken', `Username "${data.username}" is already taken.\n Please select different username.`)
+					break
+				case 'empty_data':
+					Alert.alert('Empty field', 'Please fill all inputs')
+					break
+				default:
+					Alert.alert('Error', response.msg)
+			}
+		})
 	}
 
 	focusNext() {}
@@ -62,9 +65,7 @@ class Form extends Component {
 	render() {
 		return (
 			<KeyboardAvoidingView behavior="padding" style={styles.wrapper}>
-				<View style={styles.header}>
-					<Text style={styles.headerText}>Register Node App</Text>
-				</View>
+				<View style={styles.header}>{this.state.loading ? <ActivityIndicator size="large" color="black" /> : <Text style={styles.headerText}>Register Node App</Text>}</View>
 				<View style={styles.form}>
 					<Text style={styles.label}>username</Text>
 					<TextInput

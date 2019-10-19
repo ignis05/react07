@@ -20,6 +20,7 @@ class UserListElement extends Component {
 		password: PropTypes.string,
 		deleteUser: PropTypes.func.isRequired,
 		changeView: PropTypes.func.isRequired,
+		highlighted: PropTypes.bool,
 	}
 
 	constructor(props) {
@@ -28,6 +29,8 @@ class UserListElement extends Component {
 
 		this.deleteUser = this.deleteUser.bind(this)
 		this.changeView = this.changeView.bind(this)
+
+		this.highlight = this.props.highlighted ? { backgroundColor: '#dddddd' } : {}
 	}
 
 	deleteUser() {
@@ -40,7 +43,7 @@ class UserListElement extends Component {
 
 	render() {
 		return (
-			<View style={styles.wrapper}>
+			<View style={[styles.wrapper, this.highlight]}>
 				<View style={[styles.container, styles.dataContainer]}>
 					<Image style={styles.img} resizeMode="contain" source={img} />
 					<View style={styles.textWrapper}>
