@@ -95,7 +95,9 @@ class Form extends Component {
 						onSubmitEditing={this.submitHandler}
 					/>
 					<View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center' }}>
-						<Button onTouch={this.submitHandler}>Register</Button>
+						<Button style={{ fontSize: 20 }} onTouch={this.submitHandler}>
+							REGISTER
+						</Button>
 					</View>
 				</View>
 			</KeyboardAvoidingView>

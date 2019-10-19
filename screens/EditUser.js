@@ -5,7 +5,7 @@ import img from '../assets/images/user.png'
 const styles = StyleSheet.create({
 	wrapper: { flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1 },
 	img: { width: '40%', height: '40%', aspectRatio: 1, resizeMode: 'contain', marginBottom: 10 },
-	text: { fontSize: 24 },
+	text: { fontSize: 24, textAlign: 'center' },
 })
 
 class EditUser extends Component {
@@ -33,7 +33,7 @@ class EditUser extends Component {
 					<Text style={styles.text}>{this.data ? this.data.username : 'undefined'}</Text>
 				</View>
 				<View>
-					<Text style={styles.text}>{this.data ? this.data.password : 'undefined'}</Text>
+					<Text style={[styles.text, { color: '#666666', fontSize: 22 }]}>{this.data ? this.data.password : 'undefined'}</Text>
 				</View>
 			</View>
 		)
