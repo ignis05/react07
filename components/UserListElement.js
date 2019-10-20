@@ -25,7 +25,7 @@ class UserListElement extends Component {
 
 	constructor(props) {
 		super(props)
-		this.state = {}
+		this.state = { disableButton: false }
 
 		this.deleteUser = this.deleteUser.bind(this)
 		this.changeView = this.changeView.bind(this)
@@ -34,6 +34,7 @@ class UserListElement extends Component {
 	}
 
 	deleteUser() {
+		this.setState({ disableButton: true })
 		this.props.deleteUser(this.props.username)
 	}
 
@@ -52,7 +53,7 @@ class UserListElement extends Component {
 				</View>
 				<View style={[styles.container, styles.buttonContainer]}>
 					<Button onTouch={this.changeView}>Edit</Button>
-					<Button username={this.props.username} onTouch={this.deleteUser}>
+					<Button username={this.props.username} onTouch={this.deleteUser} enabled={!this.state.disableButton}>
 						Delete
 					</Button>
 				</View>

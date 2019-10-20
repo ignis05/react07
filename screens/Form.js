@@ -30,9 +30,10 @@ class Form extends Component {
 		}
 
 		let data = { username: this.state.username, password: this.state.password }
+		this.setState({ loading: true }, () => {
+			console.log('this state loading', this.state.loading)
 
-		this.setState({ loading: true }, async () => {
-			var response = await fetch(`${ServerData}/register`, {
+			fetch(`${ServerData}/register`, {
 				method: 'POST',
 				headers: {
 					Accept: 'application/json',
@@ -40,23 +41,24 @@ class Form extends Component {
 				},
 				body: JSON.stringify(data),
 			})
-				.then(res => res.json())
 				.catch(error => Alert.alert('Error', error))
-
-			this.setState({ loading: false })
-			switch (response.msg) {
-				case 'ok':
-					this.props.navigation.navigate('list')
-					break
-				case 'user_exists':
-					Alert.alert('Username taken', `Username "${data.username}" is already taken.\n Please select different username.`)
-					break
-				case 'empty_data':
-					Alert.alert('Empty field', 'Please fill all inputs')
-					break
-				default:
-					Alert.alert('Error', response.msg)
-			}
+				.then(res => res.json())
+				.then(response => {
+					this.setState({ loading: false })
+					switch (response.msg) {
+						case 'ok':
+							this.props.navigation.navigate('list')
+							break
+						case 'user_exists':
+							Alert.alert('Username taken', `Username "${data.username}" is already taken.\n Please select different username.`)
+							break
+						case 'empty_data':
+							Alert.alert('Empty field', 'Please fill all inputs')
+							break
+						default:
+							Alert.alert('Error', response.msg)
+					}
+				})
 		})
 	}
 
@@ -96,7 +98,7 @@ class Form extends Component {
 						onSubmitEditing={this.submitHandler}
 					/>
 					<View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center' }}>
-						<Button style={{ fontSize: 20 }} onTouch={this.submitHandler}>
+						<Button style={{ fontSize: 20 }} onTouch={this.submitHandler} enabled={!this.state.loading}>
 							REGISTER
 						</Button>
 					</View>
