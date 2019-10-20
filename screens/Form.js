@@ -96,7 +96,7 @@ class Form extends Component {
 						onSubmitEditing={this.submitHandler}
 					/>
 					<View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center' }}>
-						<Button style={{ fontSize: 20 }} onTouch={this.submitHandler} dsiabled={this.state.loading}>
+						<Button style={{ fontSize: 20 }} onTouch={this.submitHandler} disabled={this.state.loading}>
 							REGISTER
 						</Button>
 					</View>
