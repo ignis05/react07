@@ -7,7 +7,7 @@ import ServerData from '../helpers/ServerData'
 const styles = StyleSheet.create({
 	wrapper: { flex: 1, alignItems: 'center' },
 	returnButton: { marginTop: 10, marginBottom: 20, fontSize: 24, fontWeight: 'bold' },
-	list: { width: '100%' },
+	list: { width: '100%', borderBottomWidth: 1, borderTopWidth: 1 },
 })
 
 class UserList extends Component {
@@ -95,7 +95,7 @@ class UserList extends Component {
 						data={this.state.users}
 						keyExtractor={item => item.username}
 						renderItem={({ item, index }) => (
-							<UserListElement username={item.username} password={item.password} changeView={this.changeView} deleteUser={this.deleteUser} highlighted={index % 2 == 0 ? true : false} />
+							<UserListElement username={item.username} password={item.password} changeView={this.changeView} deleteUser={this.deleteUser} highlighted={index % 2 == 0 ? true : false} index={index}/>
 						)}
 						onRefresh={this.refresh}
 						refreshing={this.state.refreshing}

@@ -31,8 +31,6 @@ class Form extends Component {
 
 		let data = { username: this.state.username, password: this.state.password }
 		this.setState({ loading: true }, () => {
-			console.log('this state loading', this.state.loading)
-
 			fetch(`${ServerData}/register`, {
 				method: 'POST',
 				headers: {
@@ -44,7 +42,7 @@ class Form extends Component {
 				.catch(error => Alert.alert('Error', error))
 				.then(res => res.json())
 				.then(response => {
-					this.setState({ loading: false })
+					setTimeout(() => this.setState({ loading: false }), 500)
 					switch (response.msg) {
 						case 'ok':
 							this.props.navigation.navigate('list')
@@ -98,7 +96,7 @@ class Form extends Component {
 						onSubmitEditing={this.submitHandler}
 					/>
 					<View style={{ width: '100%', flexDirection: 'row', justifyContent: 'center' }}>
-						<Button style={{ fontSize: 20 }} onTouch={this.submitHandler} enabled={!this.state.loading}>
+						<Button style={{ fontSize: 20 }} onTouch={this.submitHandler} dsiabled={this.state.loading}>
 							REGISTER
 						</Button>
 					</View>

@@ -5,7 +5,7 @@ import Button from './Button'
 import PropTypes from 'prop-types'
 
 const styles = StyleSheet.create({
-	wrapper: { width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
+	wrapper: { width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 5, borderBottomWidth: 1, borderTopWidth: 1 },
 	container: { flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' },
 	dataContainer: { width: '55%', justifyContent: 'flex-start', paddingLeft: 20, paddingRight: 5 },
 	buttonContainer: { width: '40%', height: '100%' },
@@ -29,8 +29,6 @@ class UserListElement extends Component {
 
 		this.deleteUser = this.deleteUser.bind(this)
 		this.changeView = this.changeView.bind(this)
-
-		this.highlight = this.props.highlighted ? { backgroundColor: '#dddddd' } : {}
 	}
 
 	deleteUser() {
@@ -44,7 +42,7 @@ class UserListElement extends Component {
 
 	render() {
 		return (
-			<View style={[styles.wrapper, this.highlight]}>
+			<View style={[styles.wrapper, this.props.highlighted ? { backgroundColor: '#dddddd' } : {}, this.props.index==0 ? { borderTopWidth: 2} : {}]}>
 				<View style={[styles.container, styles.dataContainer]}>
 					<Image style={styles.img} resizeMode="contain" source={img} />
 					<View style={styles.textWrapper}>
@@ -53,7 +51,7 @@ class UserListElement extends Component {
 				</View>
 				<View style={[styles.container, styles.buttonContainer]}>
 					<Button onTouch={this.changeView}>Edit</Button>
-					<Button username={this.props.username} onTouch={this.deleteUser} enabled={!this.state.disableButton}>
+					<Button username={this.props.username} onTouch={this.deleteUser} disabled={this.state.disableButton}>
 						Delete
 					</Button>
 				</View>

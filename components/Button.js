@@ -7,7 +7,7 @@ class Button extends Component {
 		onTouch: PropTypes.func,
 		children: PropTypes.string.isRequired,
 		style: PropTypes.object,
-		enabled: PropTypes.bool,
+		disabled: PropTypes.bool,
 	}
 
 	constructor(props) {
@@ -23,7 +23,7 @@ class Button extends Component {
 
 	render() {
 		return (
-			<TouchableOpacity style={this.style} onPress={this.pressHandler} disabled={!this.props.enabled}>
+			<TouchableOpacity style={this.style} onPress={this.pressHandler} disabled={this.props.disabled}>
 				<Text style={{ fontSize: this.style.fontSize, color: this.style.color }}>{this.props.children}</Text>
 			</TouchableOpacity>
 		)
